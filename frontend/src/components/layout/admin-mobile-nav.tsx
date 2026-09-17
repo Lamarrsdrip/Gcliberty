@@ -53,7 +53,7 @@ export function AdminMobileNav({ userName }: { userName: string }) {
             <Building2 className="size-4 text-white" />
           </div>
           <div>
-            <p className="text-[0.65rem] font-black text-white tracking-wide leading-none">GRAND CENTRAL</p>
+            <p className="text-[0.65rem] font-black text-white tracking-wide leading-none">GCLIBERTY</p>
             <p className="text-[0.5rem] font-bold text-white/30 tracking-[0.18em] uppercase">Command Center</p>
           </div>
         </Link>
@@ -87,7 +87,7 @@ export function AdminMobileNav({ userName }: { userName: string }) {
               <Building2 className="size-5 text-white" />
             </div>
             <div>
-              <p className="text-xs font-black text-white tracking-wide">GRAND CENTRAL</p>
+              <p className="text-xs font-black text-white tracking-wide">GCLIBERTY</p>
               <p className="text-[0.58rem] font-bold text-white/30 tracking-[0.2em] uppercase">Command Center</p>
             </div>
           </Link>

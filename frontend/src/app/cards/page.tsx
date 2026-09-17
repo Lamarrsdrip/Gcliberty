@@ -66,7 +66,7 @@ export default async function CardsPage() {
                   className={`shrink-0 w-80 bg-gradient-to-br ${CARD_GRADIENTS[c.type] ?? CARD_GRADIENTS.CLASSIC} rounded-2xl p-6 border border-white/10 premium-metal-card`}
                 >
                   <div className="flex items-center justify-between mb-8">
-                    <p className="text-[0.6rem] font-bold tracking-widest text-white/40">GRAND CENTRAL LIBERTY BANK</p>
+                    <p className="text-[0.6rem] font-bold tracking-widest text-white/40">GCLIBERTY</p>
                     <div className="flex items-center gap-0.5">
                       <div className="size-6 rounded-full bg-amber-400/70" />
                       <div className="size-6 rounded-full bg-amber-600/70 -ml-2.5" />

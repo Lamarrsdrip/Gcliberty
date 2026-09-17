@@ -199,7 +199,7 @@ async function createRetirementWelcomeAccount(userId: string) {
   if (welcomeBonus > 0) {
     await createRetirementContributionRecord({
       retirementAccountId: retirementAccount.id,
-      source: "Grand Central Liberty Bank",
+      source: "Gcliberty",
       description: "New account 401(k) welcome bonus",
       amount: welcomeBonus,
       growthAmount: 0,

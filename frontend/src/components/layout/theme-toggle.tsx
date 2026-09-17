@@ -10,7 +10,7 @@ export function ThemeToggle({ initialTheme = "system" }: { initialTheme?: string
   useEffect(() => {
     const isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.classList.toggle("dark", isDark);
-    localStorage.setItem("gclb-theme", theme);
+    localStorage.setItem("gcliberty-theme", theme);
   }, [theme]);
 
   return (

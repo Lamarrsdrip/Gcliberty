@@ -112,7 +112,7 @@ export function RegisterForm() {
     <Card>
       <CardHeader>
         <CardTitle>Create Account</CardTitle>
-        <CardDescription>Open your Grand Central Liberty Bank digital profile.</CardDescription>
+        <CardDescription>Open your Gcliberty digital profile.</CardDescription>
       </CardHeader>
       <CardContent>
         <form

@@ -127,8 +127,8 @@ export function BrandMark({ compact = false }: { compact?: boolean }) {
       </div>
       {!compact && (
         <div className="leading-tight">
-          <p className="text-sm font-black text-white">GRAND CENTRAL</p>
-          <p className="text-[0.6rem] font-bold uppercase tracking-[0.28em] text-white/40">Liberty Bank</p>
+          <p className="text-sm font-black text-white">GCLIBERTY</p>
+          <p className="text-[0.6rem] font-bold uppercase tracking-[0.28em] text-white/40">Digital Banking</p>
         </div>
       )}
     </Link>
@@ -287,7 +287,7 @@ const accountCardStyles: Record<string, string> = {
 
 const GCLB_ROUTING = "026009593";
 const GCLB_SWIFT   = "GCLBUS33";
-const GCLB_BANK    = "Grand Central Liberty Bank";
+const GCLB_BANK    = "Gcliberty";
 const GCLB_ADDRESS = "200 Liberty Plaza, New York, NY 10006";
 
 function CopyText({ value, label }: { value: string; label: string }) {
@@ -591,7 +591,7 @@ export function CardMockup() {
       <div className="premium-metal-card p-6 text-white h-48">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[0.6rem] font-bold tracking-[0.25em] text-white/50">GRAND CENTRAL</p>
+            <p className="text-[0.6rem] font-bold tracking-[0.25em] text-white/50">GCLIBERTY</p>
             <p className="text-xs font-black">LIBERTY BANK</p>
           </div>
           <div className="flex items-center gap-0.5">
@@ -715,7 +715,7 @@ export function PremiumMetalCard() {
     <div className="premium-metal-card p-5 text-white">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <p className="text-[0.6rem] font-bold tracking-widest text-white/40">GRAND CENTRAL</p>
+          <p className="text-[0.6rem] font-bold tracking-widest text-white/40">GCLIBERTY</p>
           <p className="text-[0.6rem] font-bold tracking-widest text-white/40">LIBERTY BANK</p>
         </div>
         <CreditCard className="size-5 text-white/30" />

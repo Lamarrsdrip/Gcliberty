@@ -201,7 +201,7 @@ export function FloatingChat({ signedIn }: { signedIn: boolean }) {
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: "0.83rem", fontWeight: 900, color: "#fff", lineHeight: 1.2 }}>
-                Grand Liberty Bank Support
+                Grand Digital Banking Support
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 3 }}>
                 <span style={{

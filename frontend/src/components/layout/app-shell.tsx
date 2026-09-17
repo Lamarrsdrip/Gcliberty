@@ -66,8 +66,8 @@ export function AppShell({
               <Building2 className="size-5 text-white" />
             </div>
             <div>
-              <p className="text-xs font-black text-white tracking-wide">GRAND CENTRAL</p>
-              <p className="text-[0.6rem] font-bold text-white/30 tracking-[0.22em] uppercase">Liberty Bank</p>
+              <p className="text-xs font-black text-white tracking-wide">GCLIBERTY</p>
+              <p className="text-[0.6rem] font-bold text-white/30 tracking-[0.22em] uppercase">Digital Banking</p>
             </div>
           </Link>
         </div>

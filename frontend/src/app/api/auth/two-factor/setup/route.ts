@@ -8,8 +8,8 @@ export async function POST() {
   return handleApi(async () => {
     const user = await requireUser();
     const secret = speakeasy.generateSecret({
-      name: `Grand Central Liberty Bank (${user.email})`,
-      issuer: "Grand Central Liberty Bank"
+      name: `Gcliberty (${user.email})`,
+      issuer: "Gcliberty"
     });
     await prisma.user.update({ where: { id: user.id }, data: { twoFactorSecret: secret.base32, twoFactorEnabled: false } });
     const qrCode = await qrcode.toDataURL(secret.otpauth_url ?? "");

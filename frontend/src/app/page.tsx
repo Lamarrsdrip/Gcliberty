@@ -35,13 +35,13 @@ const security = [
 
 function GrandCentralMark({ dark = false }: { dark?: boolean }) {
   return (
-    <Link href="/" className="inline-flex items-center gap-3" aria-label="Grand Central Liberty Bank home">
+    <Link href="/" className="inline-flex items-center gap-3" aria-label="Gcliberty home">
       <span className={`grid size-11 place-items-center rounded-[15px] ${dark ? "bg-[#d9b76b] text-[#07121f]" : "bg-[#0b1b2d] text-[#e7c77b]"} shadow-[0_14px_30px_rgba(11,27,45,.14)]`}>
         <Building2 className="size-5" />
       </span>
       <span className="leading-tight">
-        <span className={`block text-[0.92rem] font-black tracking-[0.055em] ${dark ? "text-white" : "text-[#0b1b2d]"}`}>GRAND CENTRAL</span>
-        <span className={`block text-[0.6rem] font-extrabold uppercase tracking-[0.24em] ${dark ? "text-white/45" : "text-[#8b7650]"}`}>Liberty Bank</span>
+        <span className={`block text-[0.92rem] font-black tracking-[0.055em] ${dark ? "text-white" : "text-[#0b1b2d]"}`}>GCLIBERTY</span>
+        <span className={`block text-[0.6rem] font-extrabold uppercase tracking-[0.24em] ${dark ? "text-white/45" : "text-[#8b7650]"}`}>Digital Banking</span>
       </span>
     </Link>
   );
@@ -82,7 +82,7 @@ export default async function HomePage() {
                 Your finances, <span className="text-[#b28a3b]">beautifully connected.</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-[#69778b]">
-                Manage everyday banking, global transfers, cards, digital assets and long-term wealth from one Grand Central Liberty Bank account.
+                Manage everyday banking, global transfers, cards, digital assets and long-term wealth from one Gcliberty account.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/register" className="inline-flex items-center gap-2 rounded-full bg-[#b28a3b] px-6 py-3.5 font-extrabold text-white shadow-[0_18px_45px_rgba(178,138,59,.25)] transition hover:-translate-y-0.5">
@@ -132,7 +132,7 @@ export default async function HomePage() {
             <div>
               <p className="text-xs font-black uppercase tracking-[.2em] text-[#a17c32]">Banking without the noise</p>
               <h2 className="mt-4 text-4xl font-black tracking-[-.045em] text-[#0b1b2d] sm:text-5xl">Everything important, in one place.</h2>
-              <p className="mt-5 max-w-lg text-base leading-7 text-[#6c7a8e]">Grand Central combines everyday money movement with premium cards, support, digital assets and long-term financial tools.</p>
+              <p className="mt-5 max-w-lg text-base leading-7 text-[#6c7a8e]">Gcliberty combines everyday money movement with premium cards, support, digital assets and long-term financial tools.</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {capabilities.map(({ icon: Icon, title, body }) => (
@@ -152,8 +152,8 @@ export default async function HomePage() {
           <div>
             <p className="text-xs font-black uppercase tracking-[.2em] text-[#d7b86e]">A wider financial view</p>
             <h2 className="mt-4 text-4xl font-black tracking-[-.045em] sm:text-5xl">See more than a balance.</h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/55">Move between accounts, cards, international payments, digital assets and retirement tools without leaving the Grand Central experience.</p>
-            <Link href="/register" className="mt-8 inline-flex items-center gap-2 font-extrabold text-[#e1c786]">Create your Grand Central profile <ArrowRight className="size-4" /></Link>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/55">Move between accounts, cards, international payments, digital assets and retirement tools without leaving the Gcliberty experience.</p>
+            <Link href="/register" className="mt-8 inline-flex items-center gap-2 font-extrabold text-[#e1c786]">Create your Gcliberty profile <ArrowRight className="size-4" /></Link>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {[["Accounts", "$92,420"], ["Cards", "4 active"], ["Digital assets", "$31,610"], ["Retirement", "$168,800"]].map(([label, value], i) => (
@@ -173,7 +173,7 @@ export default async function HomePage() {
               <div>
                 <span className="grid size-12 place-items-center rounded-2xl bg-[#0b1b2d] text-[#e1c786]"><LockKeyhole className="size-5" /></span>
                 <h2 className="mt-6 text-4xl font-black tracking-[-.04em]">Security belongs in every interaction.</h2>
-                <p className="mt-4 text-[#6d7b8f]">Grand Central combines account access controls, transaction review, secure data handling and connected support workflows throughout the platform.</p>
+                <p className="mt-4 text-[#6d7b8f]">Gcliberty combines account access controls, transaction review, secure data handling and connected support workflows throughout the platform.</p>
               </div>
               <div className="grid gap-3">
                 {security.map((item) => (
@@ -193,7 +193,7 @@ export default async function HomePage() {
             <div>
               <p className="text-xs font-black uppercase tracking-[.2em] text-white/60">Become a client</p>
               <h2 className="mt-3 text-3xl font-black tracking-[-.04em] sm:text-4xl">Your financial life deserves one clear home.</h2>
-              <p className="mt-3 max-w-2xl text-white/75">Open your Grand Central Liberty Bank account and access the complete banking workspace.</p>
+              <p className="mt-3 max-w-2xl text-white/75">Open your Gcliberty account and access the complete banking workspace.</p>
             </div>
             <Link href="/register" className="shrink-0 rounded-full bg-white px-6 py-3.5 font-black text-[#8f6b28]">Open an account</Link>
           </div>
@@ -208,7 +208,7 @@ export default async function HomePage() {
             <Link href="/register">Create account</Link>
             <Link href="/support">Support</Link>
           </div>
-          <p className="text-xs text-white/35">© 2026 Grand Central Liberty Bank. Digital banking platform.</p>
+          <p className="text-xs text-white/35">© 2026 Gcliberty. Digital banking platform.</p>
         </div>
       </footer>
     </main>

@@ -16,11 +16,11 @@ export async function POST(request: NextRequest) {
     try {
       const result = await sendEmail({
         to: input.to,
-        subject: "Grand Central Liberty Bank — SMTP Test",
+        subject: "Gcliberty — SMTP Test",
         html: `
           <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:20px">
             <h2 style="color:#22c55e">SMTP Test Successful</h2>
-            <p>Your Grand Central Liberty Bank email configuration is working correctly.</p>
+            <p>Your Gcliberty email configuration is working correctly.</p>
             <p style="color:#666;font-size:12px">This test was sent from the admin panel.</p>
           </div>
         `

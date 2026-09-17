@@ -91,7 +91,7 @@ export function DepositSection({ accounts, wallets }: { accounts: Account[]; wal
             <p className="text-[0.6rem] font-black uppercase tracking-widest text-white/30 mb-3">
               {tx.deposit_wire_details}
             </p>
-            <CopyRow label={tx.deposit_bank_name} value="Grand Central Liberty Bank" />
+            <CopyRow label={tx.deposit_bank_name} value="Gcliberty" />
             <CopyRow label={tx.deposit_bank_address} value="200 Liberty Plaza, New York, NY 10006" />
             {account && <CopyRow label={tx.deposit_account_number} value={account.accountNumber} />}
             <CopyRow label={tx.deposit_routing} value={GCLB_ROUTING} />

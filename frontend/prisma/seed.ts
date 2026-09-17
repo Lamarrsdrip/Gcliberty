@@ -58,7 +58,7 @@ async function main() {
     () => prisma.bankSetting.create({
       data: {
         id: 1,
-        bankName: "Grand Central Liberty Bank",
+        bankName: "Gcliberty",
         bankAddress: "200 Liberty Plaza, New York, NY 10006",
         supportEmail: "support@gclbank.com",
         supportPhone: "+1 (800) 555-0199",
@@ -68,9 +68,9 @@ async function main() {
         welcomeBonusEnabled: true,
         welcomeBonusAmount: 500,
         terms:
-          "Grand Central Liberty Bank provides digital account services subject to customer verification, account controls, and bank review procedures.",
+          "Gcliberty provides digital account services subject to customer verification, account controls, and bank review procedures.",
         privacyPolicy:
-          "Grand Central Liberty Bank protects customer data using role-based access, audit logging, encryption-aware storage, and secure operational processes."
+          "Gcliberty protects customer data using role-based access, audit logging, encryption-aware storage, and secure operational processes."
       }
     }),
     () => prisma.bankSetting.update({ where: { id: 1 }, data: {} })
@@ -96,7 +96,7 @@ async function main() {
         smtpHost: process.env.SMTP_HOST ?? "smtp.gmail.com",
         smtpPort: Number(process.env.SMTP_PORT ?? 465),
         smtpSecure: process.env.SMTP_SECURE !== "false",
-        senderName: "Grand Central Liberty Bank"
+        senderName: "Gcliberty"
       }
     }),
     () => prisma.emailSetting.update({ where: { id: 1 }, data: {} })
@@ -217,7 +217,7 @@ async function main() {
     console.warn("[seed] auditLog.create failed (non-fatal):", err instanceof Error ? err.message : String(err));
   }
 
-  console.log("Grand Central Liberty Bank seed complete.");
+  console.log("Gcliberty seed complete.");
 }
 
 async function ensureAccount(userId: string, data: {

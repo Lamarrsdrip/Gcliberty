@@ -1,6 +1,6 @@
-# Grand Central Liberty Bank
+# Gcliberty
 
-Grand Central Liberty Bank is a Next.js 15 banking application with customer and administrator experiences, MongoDB through Prisma, database-backed support chat, durable transactional email delivery, JWT sessions, and optional S3-compatible document storage.
+Gcliberty is a Next.js 15 banking application with customer and administrator experiences, MongoDB through Prisma, database-backed support chat, durable transactional email delivery, JWT sessions, and optional S3-compatible document storage.
 
 ## Current architecture
 

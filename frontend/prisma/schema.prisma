@@ -1,4 +1,4 @@
-// Grand Central Liberty Bank — MongoDB schema.
+// Gcliberty — MongoDB schema.
 // Migrated from PostgreSQL to MongoDB (Prisma's "mongodb" datasource provider)
 // so that the app deploys to Emergent's managed-MongoDB environment without
 // requiring an external Postgres instance.
@@ -494,7 +494,7 @@ model EmailSetting {
   smtpHost             String   @default("smtp.gmail.com")
   smtpPort             Int      @default(465)
   smtpSecure           Boolean  @default(true)
-  senderName           String   @default("Grand Central Liberty Bank")
+  senderName           String   @default("Gcliberty")
   updatedAt            DateTime @updatedAt
 }
 

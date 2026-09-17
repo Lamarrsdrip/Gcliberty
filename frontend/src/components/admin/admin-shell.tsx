@@ -43,7 +43,7 @@ export function ResponsiveSidebar({ user, collapsed, open, onClose, onCollapse }
         <div className="admin-sidebar-brand">
           <Link href="/admin?tab=overview" className="flex min-w-0 items-center gap-3" onClick={onClose}>
             <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg"><Building2 className="size-4.5 text-white" /></span>
-            <span className="admin-sidebar-copy min-w-0"><strong className="block truncate text-xs text-white">GRAND CENTRAL</strong><span className="block truncate text-[0.6rem] font-bold uppercase tracking-[.18em] text-white/35">Command Center</span></span>
+            <span className="admin-sidebar-copy min-w-0"><strong className="block truncate text-xs text-white">GCLIBERTY</strong><span className="block truncate text-[0.6rem] font-bold uppercase tracking-[.18em] text-white/35">Command Center</span></span>
           </Link>
           <button onClick={onClose} className="admin-mobile-close" aria-label="Close navigation"><X className="size-5" /></button>
         </div>
@@ -84,10 +84,10 @@ export function AdminShell({ user, announcements, children }: {
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  useEffect(() => setCollapsed(localStorage.getItem("gclb-admin-sidebar") === "collapsed"), []);
+  useEffect(() => setCollapsed(localStorage.getItem("gcliberty-admin-sidebar") === "collapsed"), []);
   const toggleCollapse = () => setCollapsed((value) => {
     const next = !value;
-    localStorage.setItem("gclb-admin-sidebar", next ? "collapsed" : "expanded");
+    localStorage.setItem("gcliberty-admin-sidebar", next ? "collapsed" : "expanded");
     return next;
   });
   return (

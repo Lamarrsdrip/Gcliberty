@@ -77,7 +77,7 @@ export async function getEmailConfig() {
     secure: setting?.smtpSecure ?? process.env.SMTP_SECURE !== "false",
     user: setting?.gmailAddress ?? process.env.SMTP_GMAIL_ADDRESS ?? process.env.SMTP_USER,
     pass: stripSpaces(decryptedPass) ?? stripSpaces(process.env.SMTP_GMAIL_APP_PASSWORD) ?? stripSpaces(process.env.SMTP_PASS),
-    senderName: setting?.senderName ?? process.env.SMTP_SENDER_NAME ?? "Grand Central Liberty Bank"
+    senderName: setting?.senderName ?? process.env.SMTP_SENDER_NAME ?? "Gcliberty"
   };
 }
 

@@ -6,7 +6,7 @@ export function GET() {
   return NextResponse.json(
     {
       ok: true,
-      service: "Grand Central Liberty Bank",
+      service: "Gcliberty",
       timestamp: new Date().toISOString()
     },
     { status: 200 }

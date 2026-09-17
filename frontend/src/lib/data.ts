@@ -13,7 +13,7 @@ export async function getBankSettings() {
   return (
     (await prisma.bankSetting.findUnique({ where: { id: 1 } })) ?? {
       id: 1,
-      bankName: "Grand Central Liberty Bank",
+      bankName: "Gcliberty",
       bankAddress: "200 Liberty Plaza, New York, NY",
       supportEmail: "support@gclbank.com",
       supportPhone: "+1 (800) 555-0199",
@@ -22,8 +22,8 @@ export async function getBankSettings() {
       supportedLocales: [...SUPPORTED_LOCALES],
       welcomeBonusEnabled: true,
       welcomeBonusAmount: 500,
-      terms: "Grand Central Liberty Bank terms are managed by the bank operations team.",
-      privacyPolicy: "Grand Central Liberty Bank privacy policy is managed by the bank operations team.",
+      terms: "Gcliberty terms are managed by the bank operations team.",
+      privacyPolicy: "Gcliberty privacy policy is managed by the bank operations team.",
       updatedAt: new Date()
     }
   );
@@ -213,12 +213,12 @@ export async function getAdminData() {
   const [r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18] = results;
 
   const defaultBankSettings = {
-    id: 1, bankName: "Grand Central Liberty Bank", bankAddress: "200 Liberty Plaza, New York, NY",
+    id: 1, bankName: "Gcliberty", bankAddress: "200 Liberty Plaza, New York, NY",
     supportEmail: "support@gclbank.com", supportPhone: "+1 (800) 555-0199",
     websiteUrl: "https://grandcentrallibertybank.com", defaultLocale: "en",
     supportedLocales: ["en"] as string[], welcomeBonusEnabled: true, welcomeBonusAmount: 500,
-    terms: "Grand Central Liberty Bank terms are managed by the bank operations team.",
-    privacyPolicy: "Grand Central Liberty Bank privacy policy is managed by the bank operations team.",
+    terms: "Gcliberty terms are managed by the bank operations team.",
+    privacyPolicy: "Gcliberty privacy policy is managed by the bank operations team.",
     updatedAt: new Date()
   };
 

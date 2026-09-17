@@ -11,8 +11,8 @@ import { FloatingChat } from "@/components/layout/floating-chat";
 import { getCurrentUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Grand Central Liberty Bank",
-  description: "Premium digital banking platform for Grand Central Liberty Bank"
+  title: "Gcliberty",
+  description: "Premium digital banking platform for Gcliberty"
 };
 
 export const viewport: Viewport = {
@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{const t=localStorage.getItem('gclb-theme')||'system';const d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch(e){}"
+              "try{const t=localStorage.getItem('gcliberty-theme')||'system';const d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch(e){}"
           }}
         />
         {children}

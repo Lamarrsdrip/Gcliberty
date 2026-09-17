@@ -687,7 +687,7 @@ export function EmailSettingsForm({ settings }: { settings: Record<string, unkno
             <Field><Label>SMTP password</Label><Input name="appPassword" type="password" placeholder={settings?.appPasswordEncrypted ? "Configured" : ""} /></Field>
             <Field><Label>SMTP host</Label><Input name="smtpHost" defaultValue={String(settings?.smtpHost ?? "smtp.gmail.com")} required /></Field>
             <Field><Label>SMTP port</Label><Input name="smtpPort" type="number" defaultValue={String(settings?.smtpPort ?? 465)} required /></Field>
-            <Field><Label>Sender name</Label><Input name="senderName" defaultValue={String(settings?.senderName ?? "Grand Central Liberty Bank")} required /></Field>
+            <Field><Label>Sender name</Label><Input name="senderName" defaultValue={String(settings?.senderName ?? "Gcliberty")} required /></Field>
             <Field><Label>Secure</Label><Select name="smtpSecure" defaultValue={String(settings?.smtpSecure ?? true)}><option value="true">Enabled</option><option value="false">Disabled</option></Select></Field>
           </div>
         </AdminJsonForm>

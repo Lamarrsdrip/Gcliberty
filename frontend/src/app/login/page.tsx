@@ -14,8 +14,8 @@ export default function LoginPage() {
               <Building2 className="size-5 text-white" />
             </div>
             <div>
-              <p className="text-sm font-black text-white tracking-wide">GRAND CENTRAL</p>
-              <p className="text-[0.6rem] font-bold text-white/40 tracking-[0.22em] uppercase">Liberty Bank</p>
+              <p className="text-sm font-black text-white tracking-wide">GCLIBERTY</p>
+              <p className="text-[0.6rem] font-bold text-white/40 tracking-[0.22em] uppercase">Digital Banking</p>
             </div>
           </Link>
           <h1 className="text-4xl font-black text-white leading-tight">Welcome back to<br/>private digital banking.</h1>

@@ -75,7 +75,7 @@ function sendHealth(res) {
   res.end(
     JSON.stringify({
       ok: true,
-      service: "Grand Central Liberty Bank",
+      service: "Gcliberty",
       build: BUILD_FINGERPRINT,
       databaseConfigured: Boolean(process.env.PRISMA_DATABASE_URL || process.env.MONGO_URL),
       timestamp: new Date().toISOString()
@@ -94,7 +94,7 @@ const httpServer = createServer((req, res) => {
   handler(req, res);
 });
 httpServer.listen(port, hostname, () => {
-  console.log(`Grand Central Liberty Bank ready on http://${hostname}:${port}`);
+  console.log(`Gcliberty ready on http://${hostname}:${port}`);
 });
 
 process.on("SIGTERM", () => httpServer.close(() => process.exit(0)));
