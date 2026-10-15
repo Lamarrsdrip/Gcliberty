@@ -9,7 +9,9 @@ import {
   approveCryptoReservation,
   getManualReservation,
   markManualReservation,
-  releaseCryptoReservation
+  releaseCryptoReservation,
+  reserveCryptoBalance,
+  rollbackCryptoApproval
 } from "@/lib/manual-payouts";
 
 const schema = z.object({
@@ -49,6 +51,16 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
         if (!debited) {
           throw Object.assign(new Error(`Cannot approve: reserved ${existing.asset} funds are no longer available.`), { status: 409 });
         }
+        try {
+          await prisma.cryptoWithdrawalRequest.update({
+            where: { id },
+            data: { status: "APPROVED", adminMessage: input.adminMessage }
+          });
+        } catch (error) {
+          await rollbackCryptoApproval(existing.userId, existing.asset, Number(existing.amount)).catch(() => undefined);
+          throw error;
+        }
+        await markManualReservation(id, "APPROVED");
       } else {
         const debited = await prisma.userCryptoBalance.updateMany({
           where: { userId: existing.userId, symbol: existing.asset, balance: { gte: existing.amount } },
@@ -57,38 +69,51 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
         if (debited.count !== 1) {
           throw Object.assign(new Error(`Cannot approve: user does not have sufficient ${existing.asset} balance.`), { status: 400 });
         }
+        try {
+          await prisma.cryptoWithdrawalRequest.update({
+            where: { id },
+            data: { status: "APPROVED", adminMessage: input.adminMessage }
+          });
+        } catch (error) {
+          await prisma.userCryptoBalance.updateMany({
+            where: { userId: existing.userId, symbol: existing.asset },
+            data: { balance: { increment: existing.amount } }
+          }).catch(() => undefined);
+          throw error;
+        }
       }
-
-      await prisma.cryptoWithdrawalRequest.update({
-        where: { id },
-        data: { status: "APPROVED", adminMessage: input.adminMessage }
-      });
-      if (hasReservedFunds) await markManualReservation(id, "APPROVED");
     } else if (input.status === "FAILED") {
       if (hasReservedFunds) {
         const released = await releaseCryptoReservation(existing.userId, existing.asset, Number(existing.amount));
         if (!released) {
           throw Object.assign(new Error("Could not release the reserved crypto balance. Refresh and retry."), { status: 409 });
         }
+        try {
+          await prisma.cryptoWithdrawalRequest.update({
+            where: { id },
+            data: { status: "FAILED", adminMessage: input.adminMessage }
+          });
+        } catch (error) {
+          await reserveCryptoBalance(existing.userId, existing.asset, Number(existing.amount)).catch(() => undefined);
+          throw error;
+        }
+        await markManualReservation(id, "RELEASED");
+      } else {
+        await prisma.cryptoWithdrawalRequest.update({
+          where: { id },
+          data: { status: "FAILED", adminMessage: input.adminMessage }
+        });
       }
-      await prisma.cryptoWithdrawalRequest.update({
-        where: { id },
-        data: { status: "FAILED", adminMessage: input.adminMessage }
-      });
-      if (hasReservedFunds) await markManualReservation(id, "RELEASED");
     }
 
     const withdrawal = await prisma.cryptoWithdrawalRequest.findUnique({ where: { id } });
-    const statusLabel =
-      input.status === "PENDING_REVIEW" ? "pending" :
-      input.status === "APPROVED" ? "approved" : "failed";
+    const statusLabel = input.status === "PENDING_REVIEW" ? "pending" : input.status === "APPROVED" ? "approved" : "failed";
 
     await notifyUser(existing.userId, {
       type: "SYSTEM",
       title: `Crypto transfer ${statusLabel}`,
       body: input.adminMessage
     });
-
     await auditLog({
       actorId: admin.id,
       action: "ADMIN_CRYPTO_WITHDRAWAL_UPDATED",
