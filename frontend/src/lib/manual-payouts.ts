@@ -183,3 +183,16 @@ export async function approveCryptoReservation(userId: string, symbol: string, a
   });
   return modifiedCount(result) === 1;
 }
+
+export async function rollbackCryptoApproval(userId: string, symbol: string, amount: number) {
+  const result = await prisma.$runCommandRaw({
+    update: "UserCryptoBalance",
+    updates: [
+      {
+        q: { userId: { $oid: userId }, symbol },
+        u: { $inc: { balance: amount, reservedBalance: amount } }
+      }
+    ]
+  });
+  return modifiedCount(result) === 1;
+}
