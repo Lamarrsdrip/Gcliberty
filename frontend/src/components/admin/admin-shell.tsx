@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   BadgeDollarSign, Bell, Bitcoin, Building2, ChevronLeft, ChevronRight, CreditCard,
@@ -12,22 +12,23 @@ import { LogoutButton } from "@/components/layout/logout-button";
 import { initials } from "@/lib/utils";
 
 const navigation = [
-  { tab: "overview", label: "Dashboard", icon: Home },
-  { tab: "users", label: "Users", icon: Users },
-  { tab: "accounts", label: "Accounts", icon: Landmark },
-  { tab: "kyc", label: "KYC", icon: ShieldCheck },
-  { tab: "crypto-balances", label: "Crypto balances", icon: Bitcoin },
-  { tab: "crypto-withdrawals", label: "Crypto withdrawals", icon: BadgeDollarSign },
-  { tab: "wallets", label: "Wallets", icon: WalletCards },
-  { tab: "retirement", label: "401(k)", icon: LineChart },
-  { tab: "transfers", label: "Transfers", icon: BadgeDollarSign },
-  { tab: "beneficiaries", label: "Beneficiaries", icon: UserCircle },
-  { tab: "cards", label: "Cards", icon: CreditCard },
-  { tab: "support", label: "Live chat", icon: Headphones },
-  { tab: "notifications", label: "Notifications", icon: Bell },
-  { tab: "email", label: "Mail delivery", icon: Mail },
-  { tab: "settings", label: "Settings", icon: Settings2 },
-  { tab: "audit", label: "Audit logs", icon: FileText }
+  { key: "overview", href: "/admin?tab=overview", label: "Dashboard", icon: Home },
+  { key: "users", href: "/admin?tab=users", label: "Users", icon: Users },
+  { key: "accounts", href: "/admin?tab=accounts", label: "Accounts", icon: Landmark },
+  { key: "kyc", href: "/admin?tab=kyc", label: "KYC", icon: ShieldCheck },
+  { key: "crypto-balances", href: "/admin?tab=crypto-balances", label: "Crypto balances", icon: Bitcoin },
+  { key: "crypto-withdrawals", href: "/admin?tab=crypto-withdrawals", label: "Crypto withdrawals", icon: BadgeDollarSign },
+  { key: "manual-payouts", href: "/admin/manual-payouts", label: "Manual payouts", icon: BadgeDollarSign },
+  { key: "wallets", href: "/admin?tab=wallets", label: "Wallets", icon: WalletCards },
+  { key: "retirement", href: "/admin?tab=retirement", label: "401(k)", icon: LineChart },
+  { key: "transfers", href: "/admin?tab=transfers", label: "Transfers", icon: BadgeDollarSign },
+  { key: "beneficiaries", href: "/admin?tab=beneficiaries", label: "Beneficiaries", icon: UserCircle },
+  { key: "cards", href: "/admin?tab=cards", label: "Cards", icon: CreditCard },
+  { key: "support", href: "/admin?tab=support", label: "Live chat", icon: Headphones },
+  { key: "notifications", href: "/admin?tab=notifications", label: "Notifications", icon: Bell },
+  { key: "email", href: "/admin?tab=email", label: "Mail delivery", icon: Mail },
+  { key: "settings", href: "/admin?tab=settings", label: "Settings", icon: Settings2 },
+  { key: "audit", href: "/admin?tab=audit", label: "Audit logs", icon: FileText }
 ] as const;
 
 type AdminUser = { firstName: string; lastName: string; email: string };
@@ -35,7 +36,10 @@ type AdminUser = { firstName: string; lastName: string; email: string };
 export function ResponsiveSidebar({ user, collapsed, open, onClose, onCollapse }: {
   user: AdminUser; collapsed: boolean; open: boolean; onClose: () => void; onCollapse: () => void;
 }) {
-  const activeTab = useSearchParams().get("tab") ?? "overview";
+  const searchTab = useSearchParams().get("tab") ?? "overview";
+  const pathname = usePathname();
+  const activeKey = pathname === "/admin/manual-payouts" ? "manual-payouts" : searchTab;
+
   return (
     <>
       {open ? <button aria-label="Close navigation" className="admin-drawer-backdrop" onClick={onClose} /> : null}
@@ -52,8 +56,8 @@ export function ResponsiveSidebar({ user, collapsed, open, onClose, onCollapse }
           <span className="admin-sidebar-copy min-w-0"><strong className="block truncate text-sm text-white">{user.firstName} {user.lastName}</strong><span className="block truncate text-[0.65rem] text-emerald-300/70">Administrator</span></span>
         </div>
         <nav className="admin-sidebar-nav" aria-label="Admin sections">
-          {navigation.map(({ tab, label, icon: Icon }) => (
-            <Link key={tab} href={`/admin?tab=${tab}`} onClick={onClose} title={collapsed ? label : undefined} aria-current={activeTab === tab ? "page" : undefined} className="admin-nav-link">
+          {navigation.map(({ key, href, label, icon: Icon }) => (
+            <Link key={key} href={href} onClick={onClose} title={collapsed ? label : undefined} aria-current={activeKey === key ? "page" : undefined} className="admin-nav-link">
               <Icon className="size-4 shrink-0" /><span className="admin-sidebar-copy truncate">{label}</span>
             </Link>
           ))}
@@ -74,7 +78,7 @@ export function AdminHeader({ user, onMenu }: { user: AdminUser; onMenu: () => v
     <header className="admin-header">
       <button onClick={onMenu} className="admin-menu-button" aria-label="Open navigation"><Menu className="size-5" /></button>
       <div className="min-w-0"><p className="truncate text-sm font-black text-white">Operations Command Center</p><p className="hidden truncate text-xs text-white/35 sm:block">Secure administration · {user.email}</p></div>
-      <div className="ml-auto flex items-center gap-2"><span className="hidden rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 text-[0.65rem] font-bold text-emerald-200 sm:inline-flex">Production controls</span><Link href="/notifications" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/5 text-white/60" aria-label="Notifications"><Bell className="size-4" /></Link></div>
+      <div className="ml-auto flex items-center gap-2"><Link href="/admin/manual-payouts" className="hidden rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 text-[0.65rem] font-bold text-emerald-200 sm:inline-flex">Payout controls</Link><Link href="/notifications" className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/5 text-white/60" aria-label="Notifications"><Bell className="size-4" /></Link></div>
     </header>
   );
 }

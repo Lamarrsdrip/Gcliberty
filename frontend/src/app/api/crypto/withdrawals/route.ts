@@ -7,6 +7,12 @@ import { prisma } from "@/lib/db";
 import { plainText } from "@/lib/sanitize";
 import { getAdminCryptoPrices, resolveRateFromMap } from "@/lib/crypto-prices";
 import { sendTransactionalEmail } from "@/lib/transactional-email";
+import {
+  createManualReservation,
+  getManualPayoutSettings,
+  releaseCryptoReservation,
+  reserveCryptoBalance
+} from "@/lib/manual-payouts";
 
 const schema = z.object({
   asset: z.string().min(2).max(12),
@@ -33,6 +39,11 @@ export async function POST(request: NextRequest) {
     const user = await requireUser();
     const input = schema.parse(await request.json());
     const asset = input.asset.toUpperCase();
+    const settings = await getManualPayoutSettings();
+
+    if (!settings.cryptoTransferEnabled) {
+      throw Object.assign(new Error("Manual crypto transfers are currently unavailable."), { status: 400 });
+    }
 
     const cryptoBal = await prisma.userCryptoBalance.findUnique({
       where: { userId_symbol: { userId: user.id, symbol: asset } }
@@ -41,26 +52,45 @@ export async function POST(request: NextRequest) {
       throw Object.assign(new Error(`Insufficient ${asset} balance.`), { status: 400 });
     }
 
-    const reference = `CWDRAW-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+    const reserved = await reserveCryptoBalance(user.id, asset, input.amount);
+    if (!reserved) {
+      throw Object.assign(new Error(`Insufficient available ${asset} balance. Some funds may already be pending.`), { status: 400 });
+    }
 
-    const withdrawal = await prisma.cryptoWithdrawalRequest.create({
-      data: {
+    const reference = `CWDRAW-${Date.now()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
+    let withdrawal: Awaited<ReturnType<typeof prisma.cryptoWithdrawalRequest.create>> | null = null;
+
+    try {
+      withdrawal = await prisma.cryptoWithdrawalRequest.create({
+        data: {
+          userId: user.id,
+          asset,
+          network: input.network,
+          amount: input.amount,
+          recipientAddress: plainText(input.recipientAddress, 160),
+          notes: input.notes ? plainText(input.notes, 500) : null,
+          status: "PENDING_REVIEW",
+          adminMessage: "Transfer submitted. Pending admin approval.",
+          reference
+        }
+      });
+
+      await createManualReservation({
+        id: withdrawal.id,
+        kind: "CRYPTO",
         userId: user.id,
         asset,
-        network: input.network,
         amount: input.amount,
-        recipientAddress: plainText(input.recipientAddress, 160),
-        notes: input.notes ? plainText(input.notes, 500) : null,
-        status: "PENDING_REVIEW",
-        adminMessage: "Transaction pending, contact support to approve withdrawal.",
-        reference
+        currency: asset
+      });
+    } catch (error) {
+      if (withdrawal) {
+        await prisma.cryptoWithdrawalRequest.delete({ where: { id: withdrawal.id } }).catch(() => undefined);
       }
-    });
+      await releaseCryptoReservation(user.id, asset, input.amount).catch(() => undefined);
+      throw error;
+    }
 
-    // Also record in CRYPTO account transaction history if account exists.
-    // Transaction.amount/currency is always a USD ledger entry (see swap route) —
-    // convert the coin quantity to its USD-equivalent value here so the wallet
-    // history never shows a raw coin amount (e.g. 0.5) mislabeled as "$0.50".
     const cryptoAccount = await prisma.account.findFirst({ where: { userId: user.id, type: "CRYPTO" } });
     if (cryptoAccount) {
       try {
@@ -86,8 +116,8 @@ export async function POST(request: NextRequest) {
 
     await notifyUser(user.id, {
       type: "SYSTEM",
-      title: "Crypto withdrawal submitted",
-      body: "Your crypto withdrawal request is pending manual review. Contact support to approve."
+      title: "Crypto transfer submitted",
+      body: "Your transfer has been submitted and is pending admin approval."
     });
 
     await auditLog({
@@ -95,14 +125,32 @@ export async function POST(request: NextRequest) {
       action: "CRYPTO_WITHDRAW_REQUESTED",
       entity: "CryptoWithdrawalRequest",
       entityId: withdrawal.id,
-      metadata: { asset, network: input.network, amount: input.amount, reference }
+      metadata: { asset, network: input.network, amount: input.amount, reference, fundsReserved: true }
     });
     await sendTransactionalEmail({
-      event: "CRYPTO_WITHDRAWAL_REQUESTED", to: user.email, idempotencyKey: `crypto-withdrawal-requested:${withdrawal.id}`,
-      relatedUserId: user.id, relatedEntityType: "CryptoWithdrawalRequest", relatedEntityId: withdrawal.id,
-      data: { customerName: `${user.firstName} ${user.lastName}`, transactionType: `${asset} withdrawal on ${input.network}`, amount: input.amount, currency: asset, status: withdrawal.status, transactionReference: reference, timestamp: withdrawal.createdAt, nextStep: "Your request is pending review. No asset is debited until approval." }
+      event: "CRYPTO_WITHDRAWAL_REQUESTED",
+      to: user.email,
+      idempotencyKey: `crypto-withdrawal-requested:${withdrawal.id}`,
+      relatedUserId: user.id,
+      relatedEntityType: "CryptoWithdrawalRequest",
+      relatedEntityId: withdrawal.id,
+      data: {
+        customerName: `${user.firstName} ${user.lastName}`,
+        transactionType: `${asset} withdrawal on ${input.network}`,
+        amount: input.amount,
+        currency: asset,
+        status: withdrawal.status,
+        transactionReference: reference,
+        timestamp: withdrawal.createdAt,
+        nextStep: "Submitted. The amount is reserved and pending admin approval."
+      }
     });
 
-    return created({ withdrawalId: withdrawal.id, reference });
+    return created({
+      withdrawalId: withdrawal.id,
+      reference,
+      status: "PENDING_REVIEW",
+      message: "Transfer submitted. Status: Pending."
+    });
   });
 }
